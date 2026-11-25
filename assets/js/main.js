@@ -16,7 +16,10 @@
     String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const normalize = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
   const nombre = (a) => `${a.marca} ${a.modelo}`;
-  const foto = (id, chica) => `assets/img/autos/${id}${chica ? "-sm" : ""}.jpg`;
+  // Fotos WebP en tres anchos: <id>-600.webp, <id>-1000.webp y <id>-1600.webp
+  const ANCHOS = [600, 1000, 1600];
+  const foto = (id, ancho = 1600) => `assets/img/autos/${id}-${ancho}.webp`;
+  const srcset = (id) => ANCHOS.map((w) => `${foto(id, w)} ${w}w`).join(", ");
   const spec = (a, etiqueta) => (a.specs || []).find(([k]) => k === etiqueta)?.[1];
   const waLink = (texto) => `https://wa.me/${SOHO.whatsapp}?text=${encodeURIComponent(texto)}`;
 
@@ -217,9 +220,9 @@
     return `
       <li class="card" style="animation-delay:${Math.min(i, 8) * 55}ms">
         <div class="card__media">
-          <img src="${foto(principal, true)}" srcset="${foto(principal, true)} 760w, ${foto(principal)} 1600w"
+          <img src="${foto(principal, 600)}" srcset="${srcset(principal)}"
             sizes="(min-width: 1080px) 31vw, (min-width: 720px) 47vw, 100vw"
-            alt="${esc(descripcionAuto(a))}" loading="lazy" decoding="async" width="760" height="570" />
+            alt="${esc(descripcionAuto(a))}" loading="lazy" decoding="async" width="600" height="450" />
           ${a.etiqueta || a.destacado ? `<span class="card__badge">${esc(a.etiqueta || "Signature")}</span>` : ""}
         </div>
         <div class="card__body">
@@ -228,10 +231,10 @@
           <ul class="card__meta">${meta.map((m) => `<li>${esc(m)}</li>`).join("")}</ul>
           <div class="card__foot">
             ${precioHTML(a)}
-            <button class="card__open" type="button" data-id="${esc(a.id)}" aria-label="Ver ficha del ${esc(nombre(a))}">
+            <a class="card__open" href="?auto=${encodeURIComponent(a.id)}" data-id="${esc(a.id)}" aria-label="Ver ficha del ${esc(nombre(a))}">
               Ver ficha
               <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </button>
+            </a>
           </div>
         </div>
       </li>`;
@@ -306,23 +309,50 @@
   render();
 
   /* ---------- Ficha del vehículo ---------- */
+  // Cada auto tiene su propio enlace: index.html?auto=<id>
   const modal = $("#carModal");
   const mImg = $("#modalImg");
   const mThumbs = $("#modalThumbs");
+  const shareBtn = $("#modalShare");
+  const shareLabel = $("#modalShareLabel");
+  const SHARE_TEXT = shareLabel.textContent;
+  const TITULO_BASE = document.title;
   let lastFocus = null;
   let modalCar = null;
+  let pushed = false; // la ficha agregó una entrada al historial
+  let closingFromHistory = false; // la ficha se cierra por el botón "atrás"
+
+  const autoEnUrl = () => new URLSearchParams(window.location.search).get("auto");
+  const urlAuto = (id) => {
+    const u = new URL(window.location.href);
+    if (id) u.searchParams.set("auto", id);
+    else u.searchParams.delete("auto");
+    u.hash = "";
+    return u.toString();
+  };
+  const esWeb = () => /^https?:$/.test(window.location.protocol);
+  const cambiarUrl = (metodo, id) => {
+    try {
+      history[metodo](id ? { auto: id } : null, "", urlAuto(id));
+      return true;
+    } catch {
+      return false; // p. ej. al abrir el archivo directo desde la computadora
+    }
+  };
 
   const setModalPhoto = (id, a) => {
+    mImg.srcset = srcset(id);
+    mImg.sizes = "(min-width: 961px) 56vw, 100vw";
     mImg.src = foto(id);
     mImg.alt = descripcionAuto(a);
     $$("button", mThumbs).forEach((b) => b.classList.toggle("is-active", b.dataset.foto === id));
   };
 
-  const openCar = (id) => {
+  const openCar = (id, { desdeHistorial = false } = {}) => {
     const a = INV.find((x) => x.id === id);
-    if (!a) return;
+    if (!a) return false;
     modalCar = a;
-    lastFocus = document.activeElement;
+    if (!modal.open) lastFocus = document.activeElement;
     const fotos = a.fotos && a.fotos.length ? a.fotos : [a.id];
 
     $("#modalBrand").textContent = a.marca;
@@ -343,21 +373,31 @@
         ? fotos
             .map(
               (f, k) =>
-                `<button type="button" data-foto="${esc(f)}" aria-label="Foto ${k + 1}"><img src="${foto(f, true)}" alt="" loading="lazy" /></button>`
+                `<button type="button" data-foto="${esc(f)}" aria-label="Foto ${k + 1}"><img src="${foto(f, 600)}" alt="" loading="lazy" /></button>`
             )
             .join("")
         : "";
     setModalPhoto(fotos[0], a);
 
-    $("#modalWa").href = waLink(mensajeAuto(descripcionAuto(a)));
+    // El mensaje incluye el enlace del auto para que el asesor sepa exactamente cuál es
+    const enlace = esWeb() ? `\n${urlAuto(a.id)}` : "";
+    $("#modalWa").href = waLink(mensajeAuto(descripcionAuto(a)) + enlace);
+    shareLabel.textContent = SHARE_TEXT;
 
-    if (typeof modal.showModal === "function") modal.showModal();
-    else modal.setAttribute("open", "");
+    if (!desdeHistorial && autoEnUrl() !== a.id) pushed = cambiarUrl("pushState", a.id);
+    document.title = `${descripcionAuto(a)} · SOHO Automotriz`;
+
+    if (!modal.open) {
+      if (typeof modal.showModal === "function") modal.showModal();
+      else modal.setAttribute("open", "");
+    }
     document.body.classList.add("is-locked");
     $("#modalClose").focus();
+    return true;
   };
 
   const closeModal = () => {
+    if (!modal.open) return;
     if (typeof modal.close === "function") modal.close();
     else {
       modal.removeAttribute("open");
@@ -365,10 +405,38 @@
     }
   };
 
+  // Al volver en el historial, que el navegador no mueva la página
+  const volverSinScroll = () => {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    history.back();
+  };
+
   modal.addEventListener("close", () => {
     document.body.classList.remove("is-locked");
-    if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
+    document.title = TITULO_BASE;
+    if (closingFromHistory) closingFromHistory = false;
+    else if (pushed) {
+      pushed = false;
+      volverSinScroll();
+    } else if (autoEnUrl()) cambiarUrl("replaceState", null);
+    if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+    lastFocus = null;
   });
+
+  window.addEventListener("popstate", () => {
+    const id = autoEnUrl();
+    if (id && INV.some((a) => a.id === id)) {
+      openCar(id, { desdeHistorial: true });
+    } else if (modal.open) {
+      closingFromHistory = true;
+      pushed = false;
+      closeModal();
+    }
+    setTimeout(() => {
+      if ("scrollRestoration" in history) history.scrollRestoration = "auto";
+    }, 0);
+  });
+
   modal.addEventListener("click", (e) => {
     if (e.target === modal) closeModal(); // clic en el fondo
   });
@@ -380,7 +448,52 @@
 
   document.addEventListener("click", (e) => {
     const trigger = e.target.closest(".card__open, .js-open-car");
-    if (trigger) openCar(trigger.dataset.id);
+    if (!trigger) return;
+    // Ctrl/Cmd + clic (o clic central) abre el enlace del auto en otra pestaña
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    openCar(trigger.dataset.id);
+  });
+
+  /* Compartir: menú nativo del celular o, si no existe, copiar el enlace */
+  const copiar = async (texto) => {
+    try {
+      await navigator.clipboard.writeText(texto);
+      return true;
+    } catch {
+      const campo = document.createElement("textarea");
+      campo.value = texto;
+      campo.setAttribute("readonly", "");
+      campo.style.cssText = "position:fixed;opacity:0;";
+      modal.appendChild(campo);
+      campo.select();
+      let ok = false;
+      try {
+        ok = document.execCommand("copy");
+      } catch {
+        ok = false;
+      }
+      modal.removeChild(campo);
+      return ok;
+    }
+  };
+  let shareTimer;
+  shareBtn.addEventListener("click", async () => {
+    const a = modalCar;
+    if (!a) return;
+    const url = urlAuto(a.id);
+    if (navigator.share && esWeb()) {
+      try {
+        await navigator.share({ title: `${nombre(a)} · SOHO Automotriz`, text: `Mira este ${nombre(a)} en SOHO Automotriz`, url });
+        return;
+      } catch (err) {
+        if (err && err.name === "AbortError") return; // la persona cerró el menú
+      }
+    }
+    const ok = await copiar(url);
+    shareLabel.textContent = ok ? "Enlace copiado" : "No se pudo copiar el enlace";
+    clearTimeout(shareTimer);
+    shareTimer = setTimeout(() => (shareLabel.textContent = SHARE_TEXT), 2400);
   });
 
   $("#modalBook").addEventListener("click", () => {
@@ -473,6 +586,10 @@
       form[n].classList.remove("is-invalid");
     })
   );
+
+  /* ---------- Abrir un auto desde su enlace (?auto=...) ---------- */
+  const autoInicial = autoEnUrl();
+  if (autoInicial && !openCar(autoInicial, { desdeHistorial: true })) cambiarUrl("replaceState", null);
 
   /* ---------- Pie ---------- */
   const year = $("#year");

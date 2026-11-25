@@ -6,11 +6,14 @@
  * del 28 de mayo al 24 de noviembre de 2026.
  *
  * Para agregar un auto:
- *   1. Guarda la foto en assets/img/autos/ con el nombre del "id"
- *      (ej. bmw-m2-competition-2026.jpg, ~1600 px) y una versión chica
- *      terminada en -sm.jpg (~760 px).
- *   2. Copia un bloque { ... } de abajo y cambia los datos.
- *   Para quitar un auto vendido, borra su bloque.
+ *   1. Prepara la foto con la herramienta (recorta a 4:3 y crea 3 tamaños WebP):
+ *        python3 herramientas/preparar_fotos.py foto.jpg bmw-x5-m-2024
+ *      Crea assets/img/autos/bmw-x5-m-2024-600.webp, -1000.webp y -1600.webp
+ *   2. Copia un bloque { ... } de abajo y cambia los datos (el "id" debe ser
+ *      el mismo nombre que usaste para la foto).
+ *   Para quitar un auto vendido, borra su bloque y sus fotos.
+ *
+ * Cada auto tiene su propio enlace para compartir: index.html?auto=<id>
  *
  * Campos:
  *   id         Nombre único, sin espacios (también es el nombre de la foto).

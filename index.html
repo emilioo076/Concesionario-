@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="preload" as="image" href="assets/img/escenas/hero-ferrari.jpg" imagesrcset="assets/img/escenas/hero-ferrari-sm.jpg 1000w, assets/img/escenas/hero-ferrari.jpg 1600w" imagesizes="100vw" />
+  <link rel="preload" as="image" type="image/webp" href="assets/img/escenas/hero-ferrari-1600.webp" imagesrcset="assets/img/escenas/hero-ferrari-1000.webp 1000w, assets/img/escenas/hero-ferrari-1600.webp 1600w" imagesizes="100vw" />
   <link rel="stylesheet" href="assets/css/styles.css" />
   <script>document.documentElement.classList.add("js");</script>
 
@@ -117,13 +117,13 @@
     <section class="hero" id="inicio" aria-label="Presentación">
       <div class="hero__slides" aria-hidden="true">
         <figure class="hero__slide is-active" data-caption="Ferrari 488 GTB">
-          <img src="assets/img/escenas/hero-ferrari.jpg" srcset="assets/img/escenas/hero-ferrari-sm.jpg 1000w, assets/img/escenas/hero-ferrari.jpg 1600w" sizes="100vw" alt="" fetchpriority="high" />
+          <img src="assets/img/escenas/hero-ferrari-1600.webp" srcset="assets/img/escenas/hero-ferrari-1000.webp 1000w, assets/img/escenas/hero-ferrari-1600.webp 1600w" sizes="100vw" alt="" fetchpriority="high" />
         </figure>
         <figure class="hero__slide" data-caption="Porsche 718 Cayman GT4 RS">
-          <img src="assets/img/escenas/hero-gt4rs.jpg" srcset="assets/img/escenas/hero-gt4rs-sm.jpg 1000w, assets/img/escenas/hero-gt4rs.jpg 1600w" sizes="100vw" alt="" />
+          <img src="assets/img/escenas/hero-gt4rs-1600.webp" srcset="assets/img/escenas/hero-gt4rs-1000.webp 1000w, assets/img/escenas/hero-gt4rs-1600.webp 1600w" sizes="100vw" alt="" />
         </figure>
         <figure class="hero__slide" data-caption="BMW X6 M Competition">
-          <img src="assets/img/escenas/hero-x6m.jpg" srcset="assets/img/escenas/hero-x6m-sm.jpg 1000w, assets/img/escenas/hero-x6m.jpg 1600w" sizes="100vw" alt="" />
+          <img src="assets/img/escenas/hero-x6m-1600.webp" srcset="assets/img/escenas/hero-x6m-1000.webp 1000w, assets/img/escenas/hero-x6m-1600.webp 1600w" sizes="100vw" alt="" />
         </figure>
       </div>
       <div class="hero__shade" aria-hidden="true"></div>
@@ -174,7 +174,7 @@
     <section class="feature section" id="destacado" aria-labelledby="featureTitle">
       <div class="container feature__grid">
         <figure class="feature__media reveal">
-          <img src="assets/img/autos/bmw-m2-competition-2026.jpg" srcset="assets/img/autos/bmw-m2-competition-2026-sm.jpg 760w, assets/img/autos/bmw-m2-competition-2026.jpg 1600w" sizes="(min-width: 960px) 58vw, 100vw" alt="BMW M2 Competition 2026 negro" loading="lazy" width="1600" height="1200" />
+          <img src="assets/img/autos/bmw-m2-competition-2026-1600.webp" srcset="assets/img/autos/bmw-m2-competition-2026-600.webp 600w, assets/img/autos/bmw-m2-competition-2026-1000.webp 1000w, assets/img/autos/bmw-m2-competition-2026-1600.webp 1600w" sizes="(min-width: 960px) 54vw, 100vw" alt="BMW M2 Competition 2026 negro" loading="lazy" width="1600" height="1200" />
           <figcaption class="feature__tag">Recién llegado</figcaption>
         </figure>
         <div class="feature__body reveal">
@@ -253,7 +253,7 @@
 
     <!-- ============ VENDE TU AUTO ============ -->
     <section class="sell" id="vende" aria-labelledby="sellTitle">
-      <img class="sell__img" src="assets/img/escenas/banda-vende.jpg" alt="" loading="lazy" />
+      <img class="sell__img" src="assets/img/escenas/banda-vende-1600.webp" srcset="assets/img/escenas/banda-vende-1000.webp 1000w, assets/img/escenas/banda-vende-1600.webp 1600w" sizes="100vw" alt="" loading="lazy" />
       <div class="sell__shade" aria-hidden="true"></div>
       <div class="container sell__grid">
         <div class="sell__intro">
@@ -340,7 +340,7 @@
     <section class="about section" id="nosotros" aria-labelledby="aboutTitle">
       <div class="container about__grid">
         <figure class="about__media reveal">
-          <img src="assets/img/escenas/nosotros.jpg" alt="Porsche 718 Cayman GTS 4.0 verde en las instalaciones de SOHO Automotriz" loading="lazy" width="1400" height="1050" />
+          <img src="assets/img/escenas/nosotros-1200.webp" srcset="assets/img/escenas/nosotros-800.webp 800w, assets/img/escenas/nosotros-1200.webp 1200w" sizes="(min-width: 960px) 40vw, 100vw" alt="Porsche 718 Cayman GTS 4.0 verde en las instalaciones de SOHO Automotriz" loading="lazy" width="1200" height="900" />
         </figure>
         <div class="about__body">
           <p class="eyebrow reveal">Nosotros</p>
@@ -553,6 +553,10 @@
             <a class="btn btn--ghost" href="tel:+524495526782">Llamar</a>
             <button class="btn btn--ghost" type="button" id="modalBook">Agendar prueba</button>
           </div>
+          <button class="modal__share" type="button" id="modalShare">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/></svg>
+            <span id="modalShareLabel">Compartir este auto</span>
+          </button>
         </div>
         <p class="modal__fine">Financiamiento y arrendamiento disponibles · Envíos a toda la República</p>
       </div>
