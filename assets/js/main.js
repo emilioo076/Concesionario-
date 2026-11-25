@@ -28,8 +28,9 @@
   const descripcionAuto = (a) => [nombre(a), a.anio, a.color && `color ${a.color.toLowerCase()}`].filter(Boolean).join(" ");
 
   /* ---------- Enlaces de WhatsApp ---------- */
+  // data-msg = mensaje completo; data-auto = nombre del auto (o vacío para un saludo general)
   $$(".js-wa").forEach((link) => {
-    link.href = waLink(mensajeAuto(link.dataset.auto));
+    link.href = waLink(link.dataset.msg || mensajeAuto(link.dataset.auto));
   });
 
   /* ---------- Encabezado ---------- */
@@ -50,7 +51,8 @@
       },
       { rootMargin: "-45% 0px -50% 0px" }
     );
-    ["coleccion", "experiencia", "nosotros", "sucursales", "contacto"].forEach((id) => {
+    // "inicio" y "sucursales" no tienen enlace en el menú: al pasar por ellas no se marca ninguno
+    ["inicio", "coleccion", "vende", "experiencia", "nosotros", "sucursales", "contacto"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) spy.observe(el);
     });
@@ -177,21 +179,30 @@
   const count = $("#resultCount");
   const empty = $("#emptyState");
   const brandFilter = $("#brandFilter");
+  const sortSelect = $("#sortSelect");
   const searchInput = $("#searchInput");
   const chips = $$(".chip");
   const formCar = $("#formCar");
+  const moreWrap = $("#moreWrap");
+  const moreBtn = $("#moreBtn");
+  const PAGE = 12;
 
-  const ordenados = INV.map((a, i) => ({ a, i }))
-    .sort((x, y) => Number(!!y.a.destacado) - Number(!!x.a.destacado) || x.i - y.i)
-    .map(({ a }) => a);
+  const indexed = INV.map((a, i) => ({ a, i }));
+  const ORDENES = {
+    destacados: (x, y) => Number(!!y.a.destacado) - Number(!!x.a.destacado) || x.i - y.i,
+    recientes: (x, y) => String(y.a.publicado || "").localeCompare(String(x.a.publicado || "")) || x.i - y.i,
+    anio: (x, y) => (y.a.anio || 0) - (x.a.anio || 0) || x.i - y.i,
+    marca: (x, y) => nombre(x.a).localeCompare(nombre(y.a), "es"),
+  };
+  const ordenar = (criterio) => [...indexed].sort(ORDENES[criterio] || ORDENES.destacados).map(({ a }) => a);
 
   [...new Set(INV.map((a) => a.marca))]
     .sort((x, y) => x.localeCompare(y, "es"))
     .forEach((m) => brandFilter.add(new Option(m, m)));
 
-  ordenados.forEach((a) => formCar.add(new Option(nombre(a) + (a.anio ? ` ${a.anio}` : ""), a.id)));
+  ordenar("marca").forEach((a) => formCar.add(new Option(nombre(a) + (a.anio ? ` ${a.anio}` : ""), a.id)));
 
-  const state = { cat: "todos", marca: "", q: "" };
+  const state = { cat: "todos", marca: "", q: "", orden: "destacados", visibles: PAGE };
 
   const precioHTML = (a) =>
     a.precio
@@ -209,7 +220,7 @@
           <img src="${foto(principal, true)}" srcset="${foto(principal, true)} 760w, ${foto(principal)} 1600w"
             sizes="(min-width: 1080px) 31vw, (min-width: 720px) 47vw, 100vw"
             alt="${esc(descripcionAuto(a))}" loading="lazy" decoding="async" width="760" height="570" />
-          ${a.destacado ? '<span class="card__badge">Signature</span>' : ""}
+          ${a.etiqueta || a.destacado ? `<span class="card__badge">${esc(a.etiqueta || "Signature")}</span>` : ""}
         </div>
         <div class="card__body">
           <p class="card__brand">${esc(a.marca)}</p>
@@ -226,18 +237,35 @@
       </li>`;
   };
 
-  const render = () => {
+  const filtrar = () => {
     const q = normalize(state.q);
-    const lista = ordenados.filter(
+    return ordenar(state.orden).filter(
       (a) =>
         (state.cat === "todos" || a.categoria === state.cat) &&
         (!state.marca || a.marca === state.marca) &&
         (!q || normalize(`${a.marca} ${a.modelo} ${a.color} ${a.anio || ""}`).includes(q))
     );
-    grid.innerHTML = lista.map(cardHTML).join("");
-    empty.hidden = lista.length > 0;
+  };
+
+  // append = true agrega la siguiente página sin volver a pintar las tarjetas anteriores
+  const render = (append = false) => {
+    const lista = filtrar();
     const n = lista.length;
+    const desde = append ? grid.children.length : 0;
+    const visibles = lista.slice(desde, state.visibles);
+    const html = visibles.map((a, i) => cardHTML(a, i)).join("");
+    if (append) grid.insertAdjacentHTML("beforeend", html);
+    else grid.innerHTML = html;
+
+    empty.hidden = n > 0;
+    const restantes = n - Math.min(n, state.visibles);
+    moreWrap.hidden = restantes <= 0;
+    moreBtn.textContent = `Ver más unidades (${restantes})`;
     count.textContent = n ? `${n} ${n === 1 ? "unidad" : "unidades"} en exhibición` : "";
+  };
+  const refiltrar = () => {
+    state.visibles = PAGE;
+    render();
   };
 
   chips.forEach((chip) =>
@@ -248,20 +276,31 @@
         c.classList.toggle("is-active", on);
         c.setAttribute("aria-pressed", String(on));
       });
-      render();
+      refiltrar();
     })
   );
   brandFilter.addEventListener("change", () => {
     state.marca = brandFilter.value;
-    render();
+    refiltrar();
+  });
+  sortSelect.addEventListener("change", () => {
+    state.orden = sortSelect.value;
+    refiltrar();
   });
   let searchTimer;
   searchInput.addEventListener("input", () => {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(() => {
       state.q = searchInput.value;
-      render();
+      refiltrar();
     }, 140);
+  });
+  moreBtn.addEventListener("click", () => {
+    const antes = grid.children.length;
+    state.visibles += PAGE;
+    render(true);
+    // Lleva el foco a la primera tarjeta nueva (para teclado y lectores de pantalla)
+    grid.children[antes]?.querySelector(".card__open")?.focus({ preventScroll: true });
   });
 
   render();
@@ -348,6 +387,8 @@
     const a = modalCar;
     lastFocus = null;
     closeModal();
+    formMotivo.value = "comprar";
+    syncMotivo();
     if (a) formCar.value = a.id;
     $("#contacto").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
     setTimeout(() => $("#leadForm input[name=nombre]").focus({ preventScroll: true }), reduceMotion ? 0 : 700);
@@ -357,6 +398,25 @@
   const form = $("#leadForm");
   const formError = $("#formError");
   const dateInput = $("#formDate");
+  const formMotivo = $("#formMotivo");
+  const carField = $("#carField");
+  const formMensaje = $("#formMensaje");
+  const mensajeLabel = $("#mensajeLabel");
+
+  const MOTIVOS = {
+    comprar: { texto: "Quisiera agendar una cita para ver un auto.", auto: true, placeholder: "¿Quieres prueba de manejo, recibir fotos o resolver alguna duda?", etiqueta: "Mensaje" },
+    vender: { texto: "Quiero vender mi auto.", auto: false, placeholder: "Marca, modelo, año y kilometraje de tu auto", etiqueta: "Tu auto" },
+    consignar: { texto: "Quiero dejar mi auto a consignación.", auto: false, placeholder: "Marca, modelo, año y kilometraje de tu auto", etiqueta: "Tu auto" },
+    financiamiento: { texto: "Me interesa conocer las opciones de financiamiento o arrendamiento.", auto: true, placeholder: "¿Qué enganche o plazo tienes en mente?", etiqueta: "Mensaje" },
+  };
+  const syncMotivo = () => {
+    const m = MOTIVOS[formMotivo.value] || MOTIVOS.comprar;
+    carField.hidden = !m.auto;
+    formMensaje.placeholder = m.placeholder;
+    mensajeLabel.innerHTML = `${m.etiqueta} <em>(opcional)</em>`;
+  };
+  formMotivo.addEventListener("change", syncMotivo);
+  syncMotivo();
   const hoy = new Date();
   dateInput.min = new Date(hoy.getTime() - hoy.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 
@@ -381,21 +441,22 @@
     }
     formError.hidden = true;
 
-    const auto = INV.find((a) => a.id === data.get("auto"));
+    const motivo = MOTIVOS[data.get("motivo")] || MOTIVOS.comprar;
+    const auto = motivo.auto ? INV.find((a) => a.id === data.get("auto")) : null;
     const fecha = data.get("fecha")
       ? new Date(`${data.get("fecha")}T12:00:00`).toLocaleDateString("es-MX", { weekday: "long", day: "numeric", month: "long" })
       : "Por confirmar";
     const mensaje = String(data.get("mensaje") || "").trim();
 
     const texto = [
-      "Hola, SOHO Automotriz. Quisiera agendar una cita.",
+      `Hola, SOHO Automotriz. ${motivo.texto}`,
       "",
       `• Nombre: ${nombreCliente}`,
       `• Teléfono: ${telefono}`,
-      `• Auto de interés: ${auto ? descripcionAuto(auto) : "Aún no lo decido"}`,
+      motivo.auto ? `• Auto de interés: ${auto ? descripcionAuto(auto) : "Aún no lo decido"}` : null,
       `• Sucursal: ${data.get("sucursal")}`,
       `• Fecha preferida: ${fecha}`,
-      mensaje ? `• Mensaje: ${mensaje}` : null,
+      mensaje ? `• ${motivo.etiqueta}: ${mensaje}` : null,
     ]
       .filter((l) => l !== null)
       .join("\n");

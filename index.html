@@ -3,23 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>SOHO Automotriz · Seminuevos de alta gama en Aguascalientes</title>
-  <meta name="description" content="Deportivos, SUVs y pick-ups de alta gama, seleccionados e inspeccionados en más de 92 puntos. Dos sucursales en Aguascalientes: Colosio y Los Sauces." />
+  <title>SOHO Automotriz · Autos premium en Aguascalientes</title>
+  <meta name="description" content="Compra, venta y consignación de autos premium en Aguascalientes. Deportivos, SUVs y pick-ups inspeccionados en más de 92 puntos. 22 años en el mercado y envíos a toda la República." />
   <meta name="theme-color" content="#0a0a0b" />
   <link rel="icon" type="image/png" href="assets/img/marca/favicon.png" />
   <link rel="apple-touch-icon" href="assets/img/marca/apple-touch-icon.png" />
 
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_MX" />
-  <meta property="og:title" content="SOHO Automotriz · Seminuevos de alta gama" />
-  <meta property="og:description" content="Deportivos, SUVs y pick-ups premium en Aguascalientes. Agenda tu prueba de manejo." />
+  <meta property="og:title" content="SOHO Automotriz · Confianza en cada kilómetro" />
+  <meta property="og:description" content="Autos premium en Aguascalientes. Compra, venta y consignación con envíos a toda la República." />
   <meta property="og:image" content="assets/img/marca/og-image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="preload" as="image" href="assets/img/escenas/hero-911.jpg" imagesrcset="assets/img/escenas/hero-911-sm.jpg 1000w, assets/img/escenas/hero-911.jpg 2048w" imagesizes="100vw" />
+  <link rel="preload" as="image" href="assets/img/escenas/hero-ferrari.jpg" imagesrcset="assets/img/escenas/hero-ferrari-sm.jpg 1000w, assets/img/escenas/hero-ferrari.jpg 1600w" imagesizes="100vw" />
   <link rel="stylesheet" href="assets/css/styles.css" />
   <script>document.documentElement.classList.add("js");</script>
 
@@ -28,25 +28,21 @@
     "@context": "https://schema.org",
     "@type": "AutoDealer",
     "name": "SOHO Automotriz",
-    "description": "Venta de autos seminuevos de gama media y alta en Aguascalientes.",
+    "slogan": "Confianza en cada kilómetro",
+    "description": "Compra, venta y consignación de autos premium en Aguascalientes, con envíos a toda la República.",
     "telephone": "+52 449 552 6782",
     "image": "assets/img/marca/og-image.jpg",
     "sameAs": ["https://www.instagram.com/sohoautomotriz"],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Blvd. Luis Donaldo Colosio Murrieta No. 602, Villas de San Nicolás",
+      "postalCode": "20115",
+      "addressLocality": "Aguascalientes",
+      "addressRegion": "Ags.",
+      "addressCountry": "MX"
+    },
+    "openingHours": ["Mo-Fr 10:00-18:00", "Sa 10:00-15:00"],
     "department": [
-      {
-        "@type": "AutoDealer",
-        "name": "SOHO Automotriz · Sucursal Colosio",
-        "telephone": "+52 449 552 6782",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Blvd. Luis Donaldo Colosio Murrieta No. 602, Villas de San Nicolás",
-          "postalCode": "20115",
-          "addressLocality": "Aguascalientes",
-          "addressRegion": "Ags.",
-          "addressCountry": "MX"
-        },
-        "openingHours": ["Mo-Fr 10:00-18:00", "Sa 10:00-15:00"]
-      },
       {
         "@type": "AutoDealer",
         "name": "SOHO Automotriz · Sucursal Los Sauces",
@@ -78,9 +74,9 @@
       <nav class="nav" aria-label="Principal">
         <ul class="nav__list">
           <li><a href="#coleccion">Colección</a></li>
+          <li><a href="#vende">Vende tu auto</a></li>
           <li><a href="#experiencia">Experiencia</a></li>
           <li><a href="#nosotros">Nosotros</a></li>
-          <li><a href="#sucursales">Sucursales</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
       </nav>
@@ -103,6 +99,7 @@
     <nav aria-label="Menú móvil">
       <ul>
         <li><a href="#coleccion">Colección</a></li>
+        <li><a href="#vende">Vende tu auto</a></li>
         <li><a href="#experiencia">Experiencia</a></li>
         <li><a href="#nosotros">Nosotros</a></li>
         <li><a href="#sucursales">Sucursales</a></li>
@@ -119,34 +116,34 @@
     <!-- ============ HERO ============ -->
     <section class="hero" id="inicio" aria-label="Presentación">
       <div class="hero__slides" aria-hidden="true">
-        <figure class="hero__slide is-active" data-caption="Porsche 911 Carrera">
-          <img src="assets/img/escenas/hero-911.jpg" srcset="assets/img/escenas/hero-911-sm.jpg 1000w, assets/img/escenas/hero-911.jpg 2048w" sizes="100vw" alt="" fetchpriority="high" />
+        <figure class="hero__slide is-active" data-caption="Ferrari 488 GTB">
+          <img src="assets/img/escenas/hero-ferrari.jpg" srcset="assets/img/escenas/hero-ferrari-sm.jpg 1000w, assets/img/escenas/hero-ferrari.jpg 1600w" sizes="100vw" alt="" fetchpriority="high" />
         </figure>
-        <figure class="hero__slide" data-caption="Chevrolet Corvette Stingray">
-          <img src="assets/img/escenas/hero-corvette.jpg" srcset="assets/img/escenas/hero-corvette-sm.jpg 1000w, assets/img/escenas/hero-corvette.jpg 2048w" sizes="100vw" alt="" />
+        <figure class="hero__slide" data-caption="Porsche 718 Cayman GT4 RS">
+          <img src="assets/img/escenas/hero-gt4rs.jpg" srcset="assets/img/escenas/hero-gt4rs-sm.jpg 1000w, assets/img/escenas/hero-gt4rs.jpg 1600w" sizes="100vw" alt="" />
         </figure>
-        <figure class="hero__slide" data-caption="GMC Yukon Denali">
-          <img src="assets/img/escenas/hero-yukon.jpg" srcset="assets/img/escenas/hero-yukon-sm.jpg 1000w, assets/img/escenas/hero-yukon.jpg 2048w" sizes="100vw" alt="" />
+        <figure class="hero__slide" data-caption="BMW X6 M Competition">
+          <img src="assets/img/escenas/hero-x6m.jpg" srcset="assets/img/escenas/hero-x6m-sm.jpg 1000w, assets/img/escenas/hero-x6m.jpg 1600w" sizes="100vw" alt="" />
         </figure>
       </div>
       <div class="hero__shade" aria-hidden="true"></div>
 
       <div class="hero__content container">
-        <p class="eyebrow eyebrow--light reveal">Seminuevos de alta gama · Aguascalientes</p>
+        <p class="eyebrow eyebrow--light reveal">Confianza en cada kilómetro</p>
         <h1 class="hero__title reveal">Alta gama,<br /><em>sin concesiones.</em></h1>
-        <p class="hero__lead reveal">Deportivos, SUVs y pick-ups premium, seleccionados uno a uno e inspeccionados en más de 92 puntos antes de llegar a tus manos.</p>
+        <p class="hero__lead reveal">Deportivos, SUVs y pick-ups premium inspeccionados en más de 92 puntos. Compra, venta y consignación en Aguascalientes, con envíos a toda la República.</p>
         <div class="hero__ctas reveal">
           <a class="btn btn--gold" href="#coleccion">Explorar la colección</a>
-          <a class="btn btn--ghost" href="#contacto">Agendar prueba de manejo</a>
+          <a class="btn btn--ghost" href="#vende">Vende tu auto</a>
         </div>
       </div>
 
       <div class="hero__meta container">
-        <p class="hero__caption"><span class="hero__caption-label">En exhibición</span> <span id="heroCaption">Porsche 911 Carrera</span></p>
+        <p class="hero__caption"><span class="hero__caption-label">En exhibición</span> <span id="heroCaption">Ferrari 488 GTB</span></p>
         <div class="hero__dots" role="tablist" aria-label="Autos en portada">
-          <button class="is-active" role="tab" aria-selected="true" aria-label="Porsche 911 Carrera"><span></span></button>
-          <button role="tab" aria-selected="false" aria-label="Chevrolet Corvette Stingray"><span></span></button>
-          <button role="tab" aria-selected="false" aria-label="GMC Yukon Denali"><span></span></button>
+          <button class="is-active" role="tab" aria-selected="true" aria-label="Ferrari 488 GTB"><span></span></button>
+          <button role="tab" aria-selected="false" aria-label="Porsche 718 Cayman GT4 RS"><span></span></button>
+          <button role="tab" aria-selected="false" aria-label="BMW X6 M Competition"><span></span></button>
         </div>
       </div>
     </section>
@@ -154,10 +151,10 @@
     <!-- ============ CIFRAS ============ -->
     <section class="stats" aria-label="SOHO en cifras">
       <div class="container stats__grid">
-        <div class="stat reveal"><p class="stat__num"><span data-count="100">100</span>+</p><p class="stat__label">Vehículos en inventario</p></div>
+        <div class="stat reveal"><p class="stat__num"><span data-count="22">22</span></p><p class="stat__label">Años en el mercado</p></div>
+        <div class="stat reveal"><p class="stat__num"><span data-count="100">100</span>+</p><p class="stat__label">Opciones en inventario</p></div>
         <div class="stat reveal"><p class="stat__num"><span data-count="92">92</span></p><p class="stat__label">Puntos de inspección</p></div>
-        <div class="stat reveal"><p class="stat__num"><span data-count="5354">5,354</span>+</p><p class="stat__label">Pruebas de manejo</p></div>
-        <div class="stat reveal"><p class="stat__num"><span data-count="1293">1,293</span>+</p><p class="stat__label">Autos vendidos</p></div>
+        <div class="stat reveal"><p class="stat__num"><span data-count="28">28</span>K+</p><p class="stat__label">Seguidores en Instagram</p></div>
       </div>
     </section>
 
@@ -165,10 +162,10 @@
     <div class="brands" aria-label="Marcas en nuestro inventario">
       <div class="brands__track">
         <ul class="brands__list">
-          <li>Porsche</li><li>Corvette</li><li>Mercedes-AMG</li><li>Maserati</li><li>GMC Denali</li><li>Ford</li><li>Jeep</li><li>RAM</li><li>MINI</li><li>Toyota</li>
+          <li>Ferrari</li><li>Porsche</li><li>BMW M</li><li>Mercedes-AMG</li><li>Audi Sport</li><li>Range Rover</li><li>Ford Raptor</li><li>Dodge</li><li>Cupra</li><li>Volvo</li><li>Jeep</li><li>GMC</li>
         </ul>
         <ul class="brands__list" aria-hidden="true">
-          <li>Porsche</li><li>Corvette</li><li>Mercedes-AMG</li><li>Maserati</li><li>GMC Denali</li><li>Ford</li><li>Jeep</li><li>RAM</li><li>MINI</li><li>Toyota</li>
+          <li>Ferrari</li><li>Porsche</li><li>BMW M</li><li>Mercedes-AMG</li><li>Audi Sport</li><li>Range Rover</li><li>Ford Raptor</li><li>Dodge</li><li>Cupra</li><li>Volvo</li><li>Jeep</li><li>GMC</li>
         </ul>
       </div>
     </div>
@@ -177,22 +174,22 @@
     <section class="feature section" id="destacado" aria-labelledby="featureTitle">
       <div class="container feature__grid">
         <figure class="feature__media reveal">
-          <img src="assets/img/autos/porsche-cayenne-coupe-gts.jpg" srcset="assets/img/autos/porsche-cayenne-coupe-gts-sm.jpg 760w, assets/img/autos/porsche-cayenne-coupe-gts.jpg 1600w" sizes="(min-width: 960px) 58vw, 100vw" alt="Porsche Cayenne Coupé GTS blanco con rines negros" loading="lazy" width="1600" height="1200" />
-          <figcaption class="feature__tag">Pieza destacada</figcaption>
+          <img src="assets/img/autos/bmw-m2-competition-2026.jpg" srcset="assets/img/autos/bmw-m2-competition-2026-sm.jpg 760w, assets/img/autos/bmw-m2-competition-2026.jpg 1600w" sizes="(min-width: 960px) 58vw, 100vw" alt="BMW M2 Competition 2026 negro" loading="lazy" width="1600" height="1200" />
+          <figcaption class="feature__tag">Recién llegado</figcaption>
         </figure>
         <div class="feature__body reveal">
-          <p class="eyebrow">Selección del mes</p>
-          <h2 class="title" id="featureTitle">Porsche Cayenne<br /><em>Coupé GTS</em></h2>
-          <p class="lead">Postura de deportivo, espacio de SUV y el V8 biturbo que distingue a la línea GTS. Una unidad para quien no está dispuesto a elegir entre emoción y practicidad.</p>
+          <p class="eyebrow">Lo más nuevo en SOHO</p>
+          <h2 class="title" id="featureTitle">BMW M2<br /><em>Competition 2026</em></h2>
+          <p class="lead">Compacto, de tracción trasera y con el seis en línea biturbo de BMW M. Acaba de llegar a nuestro piso de exhibición y es de las unidades que no duran.</p>
           <dl class="spec-grid">
-            <div><dt>Motor</dt><dd>V8 4.0 L biturbo</dd></div>
-            <div><dt>Transmisión</dt><dd>Tiptronic S, 8 vel.</dd></div>
-            <div><dt>Tracción</dt><dd>Integral</dd></div>
-            <div><dt>Color</dt><dd>Blanco</dd></div>
+            <div><dt>Modelo</dt><dd>2026</dd></div>
+            <div><dt>Motor</dt><dd>6 en línea 3.0 L biturbo</dd></div>
+            <div><dt>Tracción</dt><dd>Trasera</dd></div>
+            <div><dt>Color</dt><dd>Negro</dd></div>
           </dl>
           <div class="feature__ctas">
-            <a class="btn btn--gold js-wa" data-auto="Porsche Cayenne Coupé GTS" href="https://wa.me/524495526782" target="_blank" rel="noopener">Solicitar información</a>
-            <button class="btn btn--ghost js-open-car" data-id="porsche-cayenne-coupe-gts" type="button">Ver ficha completa</button>
+            <a class="btn btn--gold js-wa" data-auto="BMW M2 Competition 2026" href="https://wa.me/524495526782" target="_blank" rel="noopener">Solicitar información</a>
+            <button class="btn btn--ghost js-open-car" data-id="bmw-m2-competition-2026" type="button">Ver ficha completa</button>
           </div>
         </div>
       </div>
@@ -206,22 +203,31 @@
             <p class="eyebrow reveal">Inventario</p>
             <h2 class="title reveal" id="collectionTitle">La <em>colección</em></h2>
           </div>
-          <p class="section-head__text reveal">Cada unidad pasa por nuestra evaluación mecánica antes de exhibirse. Pregunta por precio y disponibilidad directamente con un asesor.</p>
+          <p class="section-head__text reveal">Unidades recién publicadas en nuestro Instagram. Cada una pasa por nuestra evaluación mecánica antes de exhibirse. Pregunta por precio y disponibilidad con un asesor.</p>
         </div>
 
         <div class="filters reveal" role="search">
           <div class="filters__tabs" role="group" aria-label="Filtrar por tipo">
             <button class="chip is-active" data-cat="todos" aria-pressed="true">Todos</button>
             <button class="chip" data-cat="deportivos" aria-pressed="false">Deportivos</button>
-            <button class="chip" data-cat="sedanes" aria-pressed="false">Sedanes</button>
             <button class="chip" data-cat="suv" aria-pressed="false">SUV</button>
             <button class="chip" data-cat="pickups" aria-pressed="false">Pick-ups</button>
+            <button class="chip" data-cat="sedanes" aria-pressed="false">Sedanes y compactos</button>
           </div>
           <div class="filters__tools">
             <label class="field field--inline">
               <span class="visually-hidden">Marca</span>
               <select id="brandFilter">
                 <option value="">Todas las marcas</option>
+              </select>
+            </label>
+            <label class="field field--inline">
+              <span class="visually-hidden">Ordenar</span>
+              <select id="sortSelect">
+                <option value="destacados">Destacados</option>
+                <option value="recientes">Más recientes</option>
+                <option value="anio">Año: más nuevo</option>
+                <option value="marca">Marca: A–Z</option>
               </select>
             </label>
             <label class="field field--inline field--search">
@@ -234,11 +240,49 @@
 
         <p class="collection__count" id="resultCount" aria-live="polite"></p>
         <ul class="car-grid" id="carGrid"></ul>
+        <div class="collection__more" id="moreWrap" hidden>
+          <button class="btn btn--ghost" type="button" id="moreBtn">Ver más unidades</button>
+        </div>
         <div class="empty" id="emptyState" hidden>
           <p>No encontramos unidades con esos filtros.</p>
           <p>Escríbenos y buscamos el auto que quieres por ti.</p>
-          <a class="btn btn--ghost js-wa" data-auto="" href="https://wa.me/524495526782" target="_blank" rel="noopener">Pedir un auto en específico</a>
+          <a class="btn btn--ghost js-wa" data-msg="Hola, SOHO Automotriz. Busco un auto en específico: " href="https://wa.me/524495526782" target="_blank" rel="noopener">Pedir un auto en específico</a>
         </div>
+      </div>
+    </section>
+
+    <!-- ============ VENDE TU AUTO ============ -->
+    <section class="sell" id="vende" aria-labelledby="sellTitle">
+      <img class="sell__img" src="assets/img/escenas/banda-vende.jpg" alt="" loading="lazy" />
+      <div class="sell__shade" aria-hidden="true"></div>
+      <div class="container sell__grid">
+        <div class="sell__intro">
+          <p class="eyebrow reveal">Vende o consigna tu auto</p>
+          <h2 class="title reveal" id="sellTitle">Compramos tu auto<br /><em>de contado</em></h2>
+          <p class="lead reveal">Modelos 2020 en adelante. Te hacemos una propuesta con pago inmediato, o lo vendemos por ti a consignación con el respaldo de expertos.</p>
+          <div class="sell__ctas reveal">
+            <a class="btn btn--gold js-wa" data-msg="Hola, SOHO Automotriz. Quiero vender mi auto. Marca, modelo, año y kilometraje: " href="https://wa.me/524495526782" target="_blank" rel="noopener">Mándame info y te hago propuesta</a>
+            <a class="btn btn--ghost js-wa" data-msg="Hola, SOHO Automotriz. Me interesa dejar mi auto a consignación. Marca, modelo, año y kilometraje: " href="https://wa.me/524495526782" target="_blank" rel="noopener">Consignar mi auto</a>
+          </div>
+        </div>
+        <ul class="sell__list">
+          <li class="reveal">
+            <svg aria-hidden="true" viewBox="0 0 48 48"><rect x="6" y="13" width="36" height="22" rx="2"/><circle cx="24" cy="24" r="5"/><path d="M11 18h3M34 30h3"/></svg>
+            <div><h3>Pago inmediato y seguro</h3><p>Pago de contado al momento, con trato directo y sin engaños.</p></div>
+          </li>
+          <li class="reveal">
+            <svg aria-hidden="true" viewBox="0 0 48 48"><path d="M14 6h14l8 8v28H14z"/><path d="M28 6v8h8M19 24h12M19 30h12M19 36h7"/></svg>
+            <div><h3>Avalúo sin costo</h3><p>Una evaluación justa y profesional de tu auto, sin compromiso.</p></div>
+          </li>
+          <li class="reveal">
+            <svg aria-hidden="true" viewBox="0 0 48 48"><path d="M24 5 9 11v11c0 10 6.5 17.5 15 21 8.5-3.5 15-11 15-21V11z"/><path d="m17 24 5 5 9-10"/></svg>
+            <div><h3>Trámite sin complicaciones</h3><p>Nos encargamos de todo para que tú no te preocupes por nada.</p></div>
+          </li>
+          <li class="reveal">
+            <svg aria-hidden="true" viewBox="0 0 48 48"><circle cx="15" cy="24" r="8"/><circle cx="15" cy="24" r="2.5"/><path d="M23 24h20M36 24v6M42 24v5"/></svg>
+            <div><h3>Consignación con respaldo</h3><p>Exhibimos y vendemos tu auto con nuestra experiencia y clientela.</p></div>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -248,7 +292,7 @@
         <div class="section-head">
           <div>
             <p class="eyebrow reveal">La experiencia SOHO</p>
-            <h2 class="title reveal" id="expTitle">Nuestro servicio<br /><em>nos distingue</em></h2>
+            <h2 class="title reveal" id="expTitle">Más que autos,<br /><em>relaciones que duran</em></h2>
           </div>
           <p class="section-head__text reveal">Comprar un auto de alta gama debe sentirse tan bien como manejarlo. Por eso cuidamos cada detalle, de la revisión mecánica a la entrega.</p>
         </div>
@@ -258,25 +302,25 @@
             <span class="pillar__num">01</span>
             <svg class="pillar__icon" aria-hidden="true" viewBox="0 0 48 48"><path d="M24 5 9 11v11c0 10 6.5 17.5 15 21 8.5-3.5 15-11 15-21V11z"/><path d="m17 24 5 5 9-10"/></svg>
             <h3>Calidad certificada</h3>
-            <p>Cada seminuevo supera una evaluación de más de 92 puntos de revisión mecánica antes de exhibirse.</p>
+            <p>Cada unidad supera una evaluación de más de 92 puntos de revisión mecánica antes de exhibirse.</p>
           </li>
           <li class="pillar reveal">
             <span class="pillar__num">02</span>
-            <svg class="pillar__icon" aria-hidden="true" viewBox="0 0 48 48"><path d="M6 30v-5l4-9c.7-1.6 2.2-2.5 3.9-2.5h20.2c1.7 0 3.2.9 3.9 2.5l4 9v5"/><path d="M6 30h36v6H6z"/><circle cx="14" cy="36" r="3.5"/><circle cx="34" cy="36" r="3.5"/><path d="M10 24h28"/></svg>
-            <h3>Gama media y alta</h3>
-            <p>Más de 100 opciones de tus marcas favoritas: deportivos, SUVs familiares y pick-ups de lujo.</p>
+            <svg class="pillar__icon" aria-hidden="true" viewBox="0 0 48 48"><rect x="6" y="12" width="36" height="24" rx="2"/><path d="M6 19h36M12 29h8"/></svg>
+            <h3>Financiamiento y arrendamiento</h3>
+            <p>Te ayudamos a estrenar con financiamiento bancario o con un esquema de arrendamiento.</p>
           </li>
           <li class="pillar reveal">
             <span class="pillar__num">03</span>
             <svg class="pillar__icon" aria-hidden="true" viewBox="0 0 48 48"><circle cx="24" cy="16" r="7"/><path d="M10 41c1.5-8 7-12 14-12s12.5 4 14 12"/></svg>
-            <h3>Asesoría personal</h3>
-            <p>Un asesor capacitado te acompaña para elegir el vehículo que mejor se adapta a ti, sin presiones.</p>
+            <h3>Experiencia y discreción</h3>
+            <p>22 años en el mercado y atención personalizada: trato directo, seguro y sin presiones.</p>
           </li>
           <li class="pillar reveal">
             <span class="pillar__num">04</span>
-            <svg class="pillar__icon" aria-hidden="true" viewBox="0 0 48 48"><path d="M24 43s-13-12.5-13-23a13 13 0 0 1 26 0c0 10.5-13 23-13 23z"/><circle cx="24" cy="20" r="4.5"/></svg>
-            <h3>Dos sucursales</h3>
-            <p>Te recibimos en Colosio y en Los Sauces para que hagas tu prueba de manejo con calma.</p>
+            <svg class="pillar__icon" aria-hidden="true" viewBox="0 0 48 48"><path d="M4 14h24v18H4zM28 20h8l6 6v6H28z"/><circle cx="12" cy="34" r="3.5"/><circle cx="34" cy="34" r="3.5"/></svg>
+            <h3>Envíos a toda la República</h3>
+            <p>¿No estás en Aguascalientes? Te enviamos tu auto a cualquier parte de México.</p>
           </li>
         </ol>
 
@@ -285,23 +329,10 @@
           <ol class="steps__list">
             <li><strong>Elige</strong><span>Explora la colección en línea o en sucursal.</span></li>
             <li><strong>Maneja</strong><span>Agenda tu prueba de manejo cuando te acomode.</span></li>
-            <li><strong>Revisa</strong><span>Conoce la evaluación de la unidad con tu asesor.</span></li>
-            <li><strong>Estrena</strong><span>Llévate tu seminuevo SOHO el mismo día.</span></li>
+            <li><strong>Revisa</strong><span>Conoce la evaluación de la unidad y tus opciones de pago.</span></li>
+            <li><strong>Estrena</strong><span>Llévatelo o recíbelo donde estés.</span></li>
           </ol>
         </div>
-      </div>
-    </section>
-
-    <!-- ============ BANDA / CITA ============ -->
-    <section class="band" aria-label="Nuestro compromiso">
-      <img class="band__img" src="assets/img/escenas/banda-m2.jpg" alt="" loading="lazy" />
-      <div class="band__shade" aria-hidden="true"></div>
-      <div class="container band__content">
-        <img class="band__emblem reveal" src="assets/img/marca/emblema-soho-blanco.png" alt="" width="475" height="433" loading="lazy" />
-        <blockquote class="band__quote reveal">
-          <p>“Nos comprometemos a brindarte la mejor atención y vehículos en óptimas condiciones.”</p>
-        </blockquote>
-        <a class="btn btn--gold reveal" href="#contacto">Estrena hoy mismo</a>
       </div>
     </section>
 
@@ -309,13 +340,13 @@
     <section class="about section" id="nosotros" aria-labelledby="aboutTitle">
       <div class="container about__grid">
         <figure class="about__media reveal">
-          <img src="assets/img/escenas/nosotros.jpg" alt="Porsche Cayenne gris en las instalaciones de SOHO Automotriz" loading="lazy" width="1400" height="1050" />
+          <img src="assets/img/escenas/nosotros.jpg" alt="Porsche 718 Cayman GTS 4.0 verde en las instalaciones de SOHO Automotriz" loading="lazy" width="1400" height="1050" />
         </figure>
         <div class="about__body">
           <p class="eyebrow reveal">Nosotros</p>
-          <h2 class="title reveal" id="aboutTitle">Una empresa mexicana con <em>vocación por la alta gama</em></h2>
-          <p class="lead reveal">SOHO Automotriz se especializa en la comercialización de autos nuevos y seminuevos de gama media y alta. Combinamos personal altamente calificado, tecnología e infraestructura para ofrecerte un servicio integral de máxima calidad.</p>
-          <p class="reveal">Queremos ser la referencia en venta de automóviles de gama media y alta en México, superando las expectativas de nuestros clientes en cada entrega.</p>
+          <h2 class="title reveal" id="aboutTitle">22 años con <em>vocación por la alta gama</em></h2>
+          <p class="lead reveal">SOHO Automotriz es una empresa mexicana especializada en la compra, venta y consignación de autos de gama media y alta. Combinamos personal altamente calificado, infraestructura y experiencia para ofrecerte un servicio integral de máxima calidad.</p>
+          <p class="reveal">Queremos ser la referencia en autos premium en México, superando las expectativas de nuestros clientes en cada entrega. Luxury, desempeño y confianza.</p>
           <div class="values reveal">
             <p class="values__title">Nuestros valores</p>
             <ul class="values__list">
@@ -332,7 +363,7 @@
         <div class="section-head">
           <div>
             <p class="eyebrow reveal">Visítanos</p>
-            <h2 class="title reveal" id="branchesTitle">Dos sucursales en <em>Aguascalientes</em></h2>
+            <h2 class="title reveal" id="branchesTitle">Te esperamos en <em>Aguascalientes</em></h2>
           </div>
           <div class="hours reveal">
             <p class="hours__title">Horario</p>
@@ -383,7 +414,7 @@
         <div class="contact__intro">
           <p class="eyebrow reveal">Agenda tu cita</p>
           <h2 class="title reveal" id="contactTitle">Tu próximo auto<br /><em>te está esperando</em></h2>
-          <p class="lead reveal">Cuéntanos qué auto te interesa y cuándo quieres verlo. Un asesor te confirmará la cita por WhatsApp.</p>
+          <p class="lead reveal">Cuéntanos qué buscas y cuándo quieres visitarnos. Un asesor te responderá por WhatsApp.</p>
           <ul class="contact__list reveal">
             <li>
               <span>Teléfono</span>
@@ -408,10 +439,19 @@
             </label>
             <label class="field">
               <span>Teléfono</span>
-              <input name="telefono" type="tel" autocomplete="tel" inputmode="tel" required placeholder="10 dígitos" pattern="[0-9 ()+-]{10,}" />
+              <input name="telefono" type="tel" autocomplete="tel" inputmode="tel" required placeholder="10 dígitos" />
             </label>
           </div>
           <label class="field">
+            <span>¿En qué te ayudamos?</span>
+            <select name="motivo" id="formMotivo">
+              <option value="comprar">Quiero comprar un auto</option>
+              <option value="vender">Quiero vender mi auto</option>
+              <option value="consignar">Quiero consignar mi auto</option>
+              <option value="financiamiento">Financiamiento o arrendamiento</option>
+            </select>
+          </label>
+          <label class="field" id="carField">
             <span>Auto de interés</span>
             <select name="auto" id="formCar">
               <option value="">Aún no lo decido</option>
@@ -431,8 +471,8 @@
             </label>
           </div>
           <label class="field">
-            <span>Mensaje <em>(opcional)</em></span>
-            <textarea name="mensaje" rows="3" placeholder="¿Quieres prueba de manejo, recibir fotos o resolver alguna duda?"></textarea>
+            <span id="mensajeLabel">Mensaje <em>(opcional)</em></span>
+            <textarea name="mensaje" rows="3" id="formMensaje" placeholder="¿Quieres prueba de manejo, recibir fotos o resolver alguna duda?"></textarea>
           </label>
           <p class="form__error" id="formError" role="alert" hidden></p>
           <button class="btn btn--gold btn--block" type="submit">
@@ -450,12 +490,14 @@
     <div class="container footer__grid">
       <div class="footer__brand">
         <img src="assets/img/marca/logo-soho-blanco.png" alt="SOHO Automotriz" width="326" height="106" loading="lazy" />
-        <p>Seminuevos de gama media y alta en Aguascalientes.</p>
+        <p>Compra, venta y consignación de autos premium. Envíos a toda la República.</p>
+        <p class="footer__motto">Luxury · Desempeño · Confianza</p>
       </div>
       <div>
         <p class="footer__title">Explora</p>
         <ul>
           <li><a href="#coleccion">Colección</a></li>
+          <li><a href="#vende">Vende tu auto</a></li>
           <li><a href="#experiencia">Experiencia</a></li>
           <li><a href="#nosotros">Nosotros</a></li>
           <li><a href="#contacto">Agendar cita</a></li>
@@ -512,7 +554,7 @@
             <button class="btn btn--ghost" type="button" id="modalBook">Agendar prueba</button>
           </div>
         </div>
-        <p class="modal__fine">Unidad inspeccionada · Más de 92 puntos de revisión</p>
+        <p class="modal__fine">Financiamiento y arrendamiento disponibles · Envíos a toda la República</p>
       </div>
     </div>
   </dialog>

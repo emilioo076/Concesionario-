@@ -50,6 +50,7 @@ body {
 }
 
 body.is-locked { overflow: hidden; }
+[hidden] { display: none !important; }
 
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration: none; }
@@ -729,6 +730,13 @@ select option { background: var(--surface); color: var(--text); }
 }
 .card:hover .card__open svg { transform: translateX(4px); }
 
+.collection__more {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(36px, 5vw, 56px);
+}
+.collection__more .btn { min-width: 280px; }
+
 .empty {
   padding: 64px 24px;
   text-align: center;
@@ -812,49 +820,70 @@ select option { background: var(--surface); color: var(--text); }
 }
 .steps__list span { display: block; margin-top: 4px; color: var(--muted); font-size: 0.92rem; }
 
-/* ---------- Banda ---------- */
-.band {
+/* ---------- Vende tu auto ---------- */
+.sell {
   position: relative;
-  display: grid;
-  place-items: center;
-  min-height: clamp(480px, 78vh, 760px);
-  overflow: hidden;
   isolation: isolate;
-  text-align: center;
+  overflow: hidden;
+  padding-block: clamp(96px, 12vw, 168px);
 }
-.band__img {
+.sell__img {
   position: absolute;
   inset: 0;
   z-index: -2;
   width: 100%; height: 100%;
   object-fit: cover;
-  object-position: center 55%;
+  object-position: center 60%;
+  filter: grayscale(0.3) brightness(0.7);
 }
-.band__shade {
+.sell__shade {
   position: absolute;
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(ellipse at center, rgba(10, 10, 11, 0.45) 0%, rgba(10, 10, 11, 0.82) 75%),
-    linear-gradient(180deg, var(--bg) 0%, rgba(10, 10, 11, 0) 22%, rgba(10, 10, 11, 0) 78%, var(--bg) 100%);
+    linear-gradient(90deg, rgba(10, 10, 11, 0.95) 0%, rgba(10, 10, 11, 0.82) 45%, rgba(10, 10, 11, 0.62) 100%),
+    linear-gradient(180deg, var(--bg) 0%, rgba(10, 10, 11, 0) 16%, rgba(10, 10, 11, 0) 84%, var(--bg) 100%);
 }
-.band__content {
+.sell .title { font-size: clamp(2.5rem, 4.4vw, 3.9rem); }
+.sell__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(40px, 6vw, 96px);
+}
+.sell__intro .lead { margin-top: 24px; }
+.sell__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.sell__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.sell__list li {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-block: 96px;
+  gap: 18px;
+  padding: clamp(24px, 3vw, 36px);
+  background: rgba(16, 16, 18, 0.86);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
-.band__emblem { width: 76px; height: auto; opacity: 0.92; }
-.band__quote p {
-  max-width: 920px;
-  margin-top: 36px;
+.sell__list svg {
+  width: 40px; height: 40px;
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sell__list h3 {
   font-family: var(--serif);
-  font-size: clamp(2rem, 4.6vw, 3.7rem);
-  font-style: italic;
+  font-size: 1.5rem;
   font-weight: 500;
-  line-height: 1.12;
+  line-height: 1.15;
 }
-.band .btn { margin-top: 44px; }
+.sell__list p { margin-top: 8px; color: var(--muted); font-size: 0.94rem; }
 
 /* ---------- Nosotros ---------- */
 .about__grid {
@@ -1061,7 +1090,14 @@ select option { background: var(--surface); color: var(--text); }
   gap: 40px;
 }
 .footer__brand img { height: 44px; width: auto; }
-.footer__brand p { margin-top: 20px; max-width: 280px; color: var(--muted); }
+.footer__brand p { margin-top: 20px; max-width: 300px; color: var(--muted); }
+.footer__brand .footer__motto {
+  margin-top: 14px;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-style: italic;
+}
 .footer__title {
   margin-bottom: 18px;
   color: var(--gold);
@@ -1247,7 +1283,8 @@ body.menu-open .wa-float { opacity: 0; pointer-events: none; }
   .header__actions .btn { display: none; }
   .feature__grid,
   .about__grid,
-  .contact__grid { grid-template-columns: 1fr; }
+  .contact__grid,
+  .sell__grid { grid-template-columns: 1fr; }
   .about__media { aspect-ratio: 4 / 3; margin-right: 24px; }
   .branches__grid { grid-template-columns: 1fr; }
   .modal__inner { grid-template-columns: 1fr; }
@@ -1286,6 +1323,10 @@ body.menu-open .wa-float { opacity: 0; pointer-events: none; }
 }
 
 @media (max-width: 560px) {
+  .btn { white-space: normal; text-align: center; padding-block: 12px; }
+  .sell__ctas .btn { flex: 1 1 100%; }
+  .sell__list { grid-template-columns: 1fr; }
+  .collection__more .btn { width: 100%; min-width: 0; }
   .pillars { grid-template-columns: 1fr; }
   .pillar { border-left: 0; padding-left: 0; padding-right: 0; }
   .pillar:nth-child(n + 2) { border-top: 1px solid var(--line); margin-top: 24px; }
