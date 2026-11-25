@@ -4,26 +4,39 @@ Rediseño del sitio de **SOHO Automotriz** (seminuevos de gama media y alta, Agu
 Es un sitio estático (HTML, CSS y JavaScript, sin dependencias ni compilación), listo para
 publicarse en cualquier hosting, en GitHub Pages o en Netlify.
 
-## Ver el sitio
+## Presentar la demo
 
-- **Directo:** abre `index.html` en el navegador.
-- **Con servidor local** (recomendado):
-  ```bash
-  python3 -m http.server 8000
-  # luego abre http://localhost:8000
-  ```
+1. Descomprime la carpeta del proyecto en tu computadora.
+2. Abre `index.html` con doble clic (de preferencia en Chrome, Edge o Safari).
+3. Pon el navegador en pantalla completa (F11 en Windows, Ctrl+Cmd+F en Mac).
+
+No necesita servidor ni instalar nada. Las fotos y las tipografías van dentro del
+proyecto, así que **se ve igual aunque no haya internet**. Sin conexión, lo único que no
+carga son los mapas de las sucursales (se muestra un ícono en su lugar) y los botones de
+WhatsApp e Instagram, que abren servicios externos.
+
+Para enseñar la versión de celular desde la computadora en Chrome: clic derecho →
+*Inspeccionar* → ícono de celular (o Ctrl+Shift+M) y elige un modelo de iPhone.
+
+Si prefieres usar un servidor local:
+```bash
+python3 -m http.server 8000
+# luego abre http://localhost:8000
+```
 
 ## Estructura
 
 ```
 index.html                 Página principal (todas las secciones)
 assets/css/styles.css      Estilos (paleta, tipografía, diseño responsivo)
+assets/css/fuentes.css     Tipografías incrustadas (funcionan sin internet)
+assets/fonts/              Licencias de las tipografías (SIL Open Font License)
 assets/js/inventario.js    ← INVENTARIO y datos de contacto (lo único que se edita a diario)
 assets/js/main.js          Filtros, ficha del auto, slider, formulario → WhatsApp
 assets/img/autos/          Fotos de los autos en WebP (nombre-600, -1000 y -1600)
-herramientas/              preparar_fotos.py: convierte fotos al formato del sitio
 assets/img/escenas/        Fotos de portada y fondos
 assets/img/marca/          Logo, ícono e imagen para redes sociales
+herramientas/              preparar_fotos.py: convierte fotos al formato del sitio
 ```
 
 ## Actualizar el inventario
@@ -57,8 +70,8 @@ Al abrirlo se muestra directo la ficha de ese auto. La ficha tiene un botón **C
 incluye el enlace para que el asesor sepa exactamente qué unidad le interesa al cliente.
 El botón "atrás" del celular cierra la ficha sin salir de la página.
 
-> Al abrir `index.html` directo desde la computadora (sin servidor), el enlace no cambia
-> en la barra de direcciones. Funciona completo una vez publicado o con el servidor local.
+> También funciona al abrir `index.html` directo. Si algún navegador no permite cambiar la
+> dirección con el archivo abierto así, la ficha del auto se abre igual.
 
 El auto de la sección "Lo más nuevo en SOHO" y los tres autos de la portada están
 directamente en `index.html` (busca `DESTACADO` y `HERO`).
