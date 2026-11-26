@@ -11,7 +11,10 @@ publicarse en cualquier hosting, en GitHub Pages o en Netlify.
 3. Pon el navegador en pantalla completa (F11 en Windows, Ctrl+Cmd+F en Mac).
 
 No necesita servidor ni instalar nada. Las fotos y las tipografías van dentro del
-proyecto, así que **se ve igual aunque no haya internet**. Sin conexión, lo único que no
+proyecto, así que **se ve igual aunque no haya internet**. También se puede abrir en el
+celular o la tablet desde la app de archivos (descomprime el ZIP primero): al abrirse como
+archivo, la página carga todas las fotos de inmediato, porque algunos visores del
+celular no avisan cuando haces scroll. Sin conexión, lo único que no
 carga son los mapas de las sucursales (se muestra un ícono en su lugar) y los botones de
 WhatsApp e Instagram, que abren servicios externos.
 
@@ -33,7 +36,7 @@ assets/css/fuentes.css     Tipografías incrustadas (funcionan sin internet)
 assets/fonts/              Licencias de las tipografías (SIL Open Font License)
 assets/js/inventario.js    ← INVENTARIO y datos de contacto (lo único que se edita a diario)
 assets/js/main.js          Filtros, ficha del auto, slider, formulario → WhatsApp
-assets/img/autos/          Fotos de los autos en WebP (nombre-600, -1000 y -1600)
+assets/img/autos/          Fotos de los autos: WebP (nombre-600, -1000, -1600) y JPG de respaldo
 assets/img/escenas/        Fotos de portada y fondos
 assets/img/marca/          Logo, ícono e imagen para redes sociales
 herramientas/              preparar_fotos.py: convierte fotos al formato del sitio
@@ -50,8 +53,10 @@ El inventario actual (40 unidades) sale de las últimas publicaciones de Instagr
    python3 herramientas/preparar_fotos.py foto-del-auto.jpg bmw-x5-m-2024
    ```
    La recorta a 4:3 y crea tres versiones WebP ligeras en `assets/img/autos/`
-   (`bmw-x5-m-2024-600.webp`, `-1000.webp` y `-1600.webp`). El navegador elige el
-   tamaño según la pantalla.
+   (`bmw-x5-m-2024-600.webp`, `-1000.webp` y `-1600.webp`), más una copia
+   `bmw-x5-m-2024.jpg` de respaldo. El navegador elige el tamaño según la pantalla, y si el
+   equipo no puede mostrar WebP (iPhone o iPad con iOS 13 o anterior), la página usa el
+   JPG automáticamente.
 2. Copia un bloque `{ ... }` del archivo y cambia los datos (`id`, `marca`, `modelo`,
    `categoria`, `color`, `specs`, `fotos`, `publicado`). El `id` debe ser el mismo
    nombre que usaste para la foto.
@@ -60,7 +65,7 @@ El inventario actual (40 unidades) sale de las últimas publicaciones de Instagr
 4. `destacado: true` pone el auto al principio con la etiqueta *Signature*.
    `etiqueta: "Nueva"` (o cualquier texto) cambia esa etiqueta.
 
-Para quitar un auto vendido, borra su bloque y sus tres fotos.
+Para quitar un auto vendido, borra su bloque y sus fotos (los tres `.webp` y el `.jpg`).
 
 ## Enlace de cada auto
 

@@ -30,6 +30,54 @@
 
   const descripcionAuto = (a) => [nombre(a), a.anio, a.color && `color ${a.color.toLowerCase()}`].filter(Boolean).join(" ");
 
+  /* ---------- Fotos: modo local y respaldo JPG ---------- */
+  // LOCAL = la página se abrió como archivo (doble clic en index.html, o desde el
+  // visor de archivos del celular) y no desde un sitio web.
+  const LOCAL = !/^https?:$/.test(window.location.protocol);
+
+  // Si el equipo no puede mostrar WebP (iOS 13 o anterior), usa la copia JPG:
+  // assets/img/autos/<id>-600.webp → assets/img/autos/<id>.jpg
+  const aJpg = (url) => url.replace(/-\d+\.webp(?=$|[?#])/, ".jpg");
+  const rescatarFoto = (img) => {
+    const url = img.currentSrc || img.getAttribute("src") || "";
+    if (img.dataset.respaldo || !/\.webp(?:$|[?#])/.test(url)) return;
+    img.dataset.respaldo = "jpg";
+    img.removeAttribute("srcset");
+    img.removeAttribute("sizes");
+    img.src = aJpg(url);
+  };
+  document.addEventListener(
+    "error",
+    (e) => {
+      if (e.target && e.target.tagName === "IMG") rescatarFoto(e.target);
+    },
+    true
+  );
+
+  // Los visores de archivos del celular a veces no avisan del scroll, y las fotos con
+  // carga diferida nunca se piden. En modo local se cargan de inmediato y con una sola
+  // versión (sin srcset), que funciona en cualquier visor.
+  const simplificarFoto = (img) => {
+    const opciones = (img.getAttribute("srcset") || "")
+      .split(",")
+      .map((s) => s.trim().split(/\s+/))
+      .filter(([u]) => u)
+      .map(([u, w]) => [u, parseInt(w, 10) || 0]);
+    if (opciones.length) {
+      const [mayor] = opciones.sort((x, y) => y[1] - x[1])[0];
+      img.removeAttribute("srcset");
+      img.removeAttribute("sizes");
+      img.src = mayor;
+    }
+    img.loading = "eager";
+  };
+  if (LOCAL) $$("img").forEach(simplificarFoto);
+
+  // Fotos que ya fallaron antes de que este código corriera
+  $$("img").forEach((img) => {
+    if (img.complete && img.naturalWidth === 0 && img.getAttribute("src")) rescatarFoto(img);
+  });
+
   /* ---------- Enlaces de WhatsApp ---------- */
   // data-msg = mensaje completo; data-auto = nombre del auto (o vacío para un saludo general)
   $$(".js-wa").forEach((link) => {
@@ -220,9 +268,13 @@
     return `
       <li class="card" style="animation-delay:${Math.min(i, 8) * 55}ms">
         <div class="card__media">
-          <img src="${foto(principal, 600)}" srcset="${srcset(principal)}"
-            sizes="(min-width: 1080px) 31vw, (min-width: 720px) 47vw, 100vw"
-            alt="${esc(descripcionAuto(a))}" loading="lazy" decoding="async" width="600" height="450" />
+          ${
+            LOCAL
+              ? `<img src="${foto(principal, 1000)}" loading="eager"`
+              : `<img src="${foto(principal, 600)}" srcset="${srcset(principal)}"
+            sizes="(min-width: 1080px) 31vw, (min-width: 720px) 47vw, 100vw" loading="lazy"`
+          }
+            alt="${esc(descripcionAuto(a))}" decoding="async" width="600" height="450" />
           ${a.etiqueta || a.destacado ? `<span class="card__badge">${esc(a.etiqueta || "Signature")}</span>` : ""}
         </div>
         <div class="card__body">
@@ -341,8 +393,14 @@
   };
 
   const setModalPhoto = (id, a) => {
-    mImg.srcset = srcset(id);
-    mImg.sizes = "(min-width: 961px) 56vw, 100vw";
+    delete mImg.dataset.respaldo;
+    if (LOCAL) {
+      mImg.removeAttribute("srcset");
+      mImg.removeAttribute("sizes");
+    } else {
+      mImg.srcset = srcset(id);
+      mImg.sizes = "(min-width: 961px) 56vw, 100vw";
+    }
     mImg.src = foto(id);
     mImg.alt = descripcionAuto(a);
     $$("button", mThumbs).forEach((b) => b.classList.toggle("is-active", b.dataset.foto === id));
@@ -373,7 +431,7 @@
         ? fotos
             .map(
               (f, k) =>
-                `<button type="button" data-foto="${esc(f)}" aria-label="Foto ${k + 1}"><img src="${foto(f, 600)}" alt="" loading="lazy" /></button>`
+                `<button type="button" data-foto="${esc(f)}" aria-label="Foto ${k + 1}"><img src="${foto(f, 600)}" alt="" /></button>`
             )
             .join("")
         : "";

@@ -4,6 +4,8 @@ Prepara fotos para el sitio de SOHO Automotriz.
 
 Recorta la foto a 4:3 (centrado) y genera versiones WebP ligeras en varios
 anchos, con el nombre que espera el sitio:  <id>-600.webp, <id>-1000.webp, <id>-1600.webp
+Además crea <id>.jpg, una copia de respaldo para equipos que no leen WebP
+(por ejemplo, iPhone o iPad con iOS 13 o anterior).
 
 Uso:
     python3 herramientas/preparar_fotos.py FOTO ID
@@ -42,7 +44,13 @@ def recortar_4x3(im):
     return im.crop((0, y, w, y + nh))
 
 
-def preparar(foto, ident, carpeta="autos", anchos=(600, 1000, 1600), calidad=74, recorte=True):
+def reducir(im, ancho):
+    if im.width <= ancho:
+        return im
+    return im.resize((ancho, round(im.height * ancho / im.width)), Image.LANCZOS)
+
+
+def preparar(foto, ident, carpeta="autos", anchos=(600, 1000, 1600), calidad=74, recorte=True, ancho_jpg=1000):
     im = ImageOps.exif_transpose(Image.open(foto)).convert("RGB")
     if recorte:
         im = recortar_4x3(im)
@@ -50,12 +58,13 @@ def preparar(foto, ident, carpeta="autos", anchos=(600, 1000, 1600), calidad=74,
     destino.mkdir(parents=True, exist_ok=True)
     salidas = []
     for ancho in anchos:
-        copia = im
-        if im.width > ancho:
-            copia = im.resize((ancho, round(im.height * ancho / im.width)), Image.LANCZOS)
         ruta = destino / f"{ident}-{ancho}.webp"
-        copia.save(ruta, "WEBP", quality=calidad, method=6)
+        reducir(im, ancho).save(ruta, "WEBP", quality=calidad, method=6)
         salidas.append(ruta)
+    # Copia JPG de respaldo (el sitio la usa solo si el equipo no puede mostrar WebP)
+    ruta = destino / f"{ident}.jpg"
+    reducir(im, ancho_jpg).save(ruta, "JPEG", quality=78, optimize=True, progressive=True)
+    salidas.append(ruta)
     return salidas
 
 
@@ -72,7 +81,8 @@ def main():
     if " " in a.id:
         sys.exit("El id no puede tener espacios. Usa guiones, por ejemplo: bmw-x5-m-2024")
     anchos = tuple(int(x) for x in a.anchos.split(","))
-    for ruta in preparar(a.foto, a.id, a.carpeta, anchos, a.calidad, not a.sin_recorte):
+    ancho_jpg = 1000 if a.carpeta == "autos" else max(anchos)
+    for ruta in preparar(a.foto, a.id, a.carpeta, anchos, a.calidad, not a.sin_recorte, ancho_jpg):
         print(f"{ruta.relative_to(RAIZ)}  ({ruta.stat().st_size // 1024} KB)")
 
 
